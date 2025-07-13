@@ -4,51 +4,38 @@ iTick.org Indices WebSocket API 提供全球指数最新数据的流式访问。
 
 我们的 WebSocket API 基于授权，授权可控制您可以连接到哪些 WebSocket 集群以及您可以访问哪些类型的数据。 您可以登录查看包含您的 API 密钥并根据您的授权进行个性化的示例。
 
-## 第 1 步：连接
+## 第 1 步：连接&鉴权
 
 使用高级计划，您将能够使用单个连接到集群。如果另一个连接同时尝试连接到集群，则当前连接将被断开。 如果您需要同时连接到此集群的更多连接，您可以联系支持人员。
 
 连接到集群：
 
 ```shell
-wscat -c wss://api.itick.org/iws
+wscat -c wss://api.itick.org/iws -H "token: a5ca43ba************1847ac9259ae290c8"
 ```
 
-连接后您将收到以下消息：
-
-```json json
+连接后您将收到以下两条消息：
+建立连接成功
+```json
 {
   "code":1,
   "msg": "Connected Successfully"
 }
 ```
 
-<br />
-
-## 第 2 步：验证
-
-您必须先进行身份验证，然后才能提出任何其他请求。
-
+鉴权成功，您将收到以下消息
 ```json
 {
-  "ac":"auth",
-  "params":"dVEIODs9rmbxOtFJAL_SRvwLXjmddLKg"
+    "code": 1,
+    "resAc": "auth",
+    "msg": "authenticated",
+    "data": {
+        "params": "a5ca43ba************1847ac9259ae290c8"
+    }
 }
 ```
-
-验证成功后，您将收到以下消息：
-
-```json
-{
-  "code":1,
-  "resAc":"auth",
-  "msg": "authenticated"
-}
-```
-
 验证失败，会断开连接，流程终止
-
-```json
+``` json
 {
   "code":0,
   "resAc":"auth",
@@ -65,7 +52,7 @@ wscat -c wss://api.itick.org/iws
 ```json
 {
   "ac":"subscribe",
-  "params":"US100",
+  "params":"EURUSD,GBPUSD",
   "types":"quote"
 }
 ```

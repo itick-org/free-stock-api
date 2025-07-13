@@ -5,51 +5,38 @@ iTick.org Crypto WebSocket API 提供全球主流加密货币最新数据的流�
 
 我们的 WebSocket API 基于授权，授权可控制您可以连接到哪些 WebSocket 集群以及您可以访问哪些类型的数据。 您可以登录查看包含您的 API 密钥并根据您的授权进行个性化的示例。
 
-## 第 1 步：连接
+## 第 1 步：连接&鉴权
 
 使用高级计划，您将能够使用单个连接到集群。如果另一个连接同时尝试连接到集群，则当前连接将被断开。 如果您需要同时连接到此集群的更多连接，您可以联系支持人员。
 
 连接到集群：
 
 ```shell
-wscat -c wss://api.itick.org/cws
+wscat -c wss://api.itick.org/cws -H "token: a5ca43ba************1847ac9259ae290c8"
 ```
 
-连接后您将收到以下消息：
-
-```json json
+连接后您将收到以下两条消息：
+建立连接成功
+```json
 {
   "code":1,
   "msg": "Connected Successfully"
 }
 ```
 
-<br />
-
-## 第 2 步：验证
-
-您必须先进行身份验证，然后才能提出任何其他请求。
-
+鉴权成功，您将收到以下消息
 ```json
 {
-  "ac":"auth",
-  "params":"dVEIODs9rmbxOtFJAL_SRvwLXjmddLKg"
+    "code": 1,
+    "resAc": "auth",
+    "msg": "authenticated",
+    "data": {
+        "params": "a5ca43ba************1847ac9259ae290c8"
+    }
 }
 ```
-
-验证成功后，您将收到以下消息：
-
-```json
-{
-  "code":1,
-  "resAc":"auth",
-  "msg": "authenticated"
-}
-```
-
 验证失败，会断开连接，流程终止
-
-```json
+``` json
 {
   "code":0,
   "resAc":"auth",
@@ -59,7 +46,7 @@ wscat -c wss://api.itick.org/cws
 
 <br />
 
-## 第 3 步：订阅
+## 第 2 步：订阅
 
 验证身份后，即可请求流。您可以在同一请求中请求多个流。
 
@@ -108,7 +95,7 @@ wscat -c wss://api.itick.org/cws
 
 <br />
 
-## 第 4 步：响应内容
+## 第 3 步：响应内容
 
 iTick.org WebSocket 客户端必须能够每秒处理许多传入消息。由于 WebSocket 协议的性质，如果客户端从服务器获取消息的速度很慢，iTick.org 的服务器必须缓冲消息，并以客户端可以接收的速度发送消息。如果客户端长时间以太慢的速度消费消息， iTick.org的服务器端缓冲区可能会变得太大。如果发生这种情况，iTick.org 将终止 WebSocket 连接。如果您经常遇到这种情况，请考虑订阅较少的符号或频道。
 
@@ -238,7 +225,7 @@ iTick.org WebSocket 客户端必须能够每秒处理许多传入消息。由于
 
 <br />
 
-## 第 5 步：保持心跳
+## 第 4 步：保持心跳
 
 客户端向服务器发送
 
