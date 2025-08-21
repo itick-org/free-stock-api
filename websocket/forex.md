@@ -11,7 +11,7 @@ iTick.org Forex WebSocket API 提供全球最新外汇数据的流式访问。 �
 连接到集群：
 
 ```shell
-wscat -c wss://api.itick.org/fws -H "token: a5ca43ba************1847ac9259ae290c8"
+wscat -c wss://api.itick.org/forex -H "token: a5ca43ba************1847ac9259ae290c8"
 ```
 
 连接后您将收到以下两条消息：
