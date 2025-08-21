@@ -1,6 +1,6 @@
 # 介绍
 
-iTick 提供免费实时的股票API，支持主要市场（美国、香港、中国、新加坡、日本等）的实时股票报价。包括 FIX、REST 和 Websocket API协议支持，可满足机构级客户的需求。我们的 iTick API 解决方案具有高度可扩展性，可让客户访问实时市场数据和见解。客户可以轻松地将我们的 iTick API 与其现有系统和应用程序集成，从而简化工作流程。 [英文文档](https://itick.readme.io)、[繁体文档](https://itick-hk.readme.io)
+iTick 提供免费实时的股票API，支持主要市场（美国、香港、中国、新加坡、日本等）的实时股票报价。包括 FIX、REST 和 Websocket API协议支持，可满足机构级客户的需求。我们的 iTick API 解决方案具有高度可扩展性，可让客户访问实时市场数据和见解。客户可以轻松地将我们的 iTick API 与其现有系统和应用程序集成，从而简化工作流程。 [英文文档](https://docs.itick.org)、[繁体文档](https://docs.itick.org)
 
 # 特点
 
