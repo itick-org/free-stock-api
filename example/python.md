@@ -51,64 +51,59 @@ import websocket
 import json
 
 # WebSocket服务器的地址
-websocket_url = "wss://api.itick.org/sws"
+websocket_url = "wss://api.itick.org/stock"
 
-# 用于鉴权
-auth_message = {
-  "ac":"auth",
-  "params":"you_apikey"
+# 替换为你的实际API密钥
+api_key = "your_actual_apikey_here"
+
+# 请求头部参数：通过header传递token鉴权，替代消息体鉴权
+headers = {
+    "token": api_key
 }
 
-# 用于订阅的消息格式，这里假设订阅一个名为 "your_channel" 的频道
+# 用于订阅的消息格式（仅保留必要的订阅逻辑）
 subscribe_message = {
-  "ac":"subscribe",
-  "params":"AM.LPL,AM.LPL",
-  "types":"depth,quote"
+    "ac": "subscribe",
+    "params": "AAPL$US",
+    "types": "depth,quote"
 }
 
 def on_open(ws):
-    """
-    当WebSocket连接打开时调用的函数
-    """
-    print("WebSocket连接已打开，正在发送鉴权消息...")
-    
-    # 发送鉴权消息
-    ws.send(json.dumps(auth_message))
-    
-    # 将订阅消息转换为JSON格式并发送
+    """WebSocket连接打开后，直接发送订阅消息（无需鉴权消息）"""
+    print("WebSocket连接已打开，正在发送订阅消息...")
+    # 仅发送订阅消息，删除鉴权消息发送逻辑
     ws.send(json.dumps(subscribe_message))
 
 def on_message(ws, message):
-    """
-    当收到WebSocket消息时调用的函数
-    """
+    """接收并解析WebSocket消息"""
     print(f"收到消息: {message}")
-    # 这里可以根据收到的消息内容进行进一步的处理，比如解析JSON数据等
-    data = json.loads(message)
-    if "data" in data:
-        print(f"数据内容: {data['data']}")
+    try:
+        data = json.loads(message)
+        if "data" in data:
+            print(f"数据内容: {data['data']}")
+    except json.JSONDecodeError:
+        print("消息解析失败，非有效JSON格式")
 
 def on_error(ws, error):
-    """
-    当WebSocket连接出现错误时调用的函数
-    """
+    """捕获WebSocket连接错误"""
     print(f"WebSocket错误: {error}")
 
 def on_close(ws, close_status_code, close_msg):
-    """
-    当WebSocket连接关闭时调用的函数
-    """
+    """处理WebSocket连接关闭"""
     print(f"WebSocket连接已关闭，状态码: {close_status_code}，消息: {close_msg}")
 
 if __name__ == "__main__":
-    # 创建WebSocket对象并设置回调函数
-    ws = websocket.WebSocketApp(websocket_url,
-                                on_open=on_open,
-                                on_message=on_message,
-                                on_error=on_error,
-                                on_close=on_close)
+    # 创建WebSocket对象，核心是通过header参数传入token鉴权
+    ws = websocket.WebSocketApp(
+        websocket_url,
+        on_open=on_open,
+        on_message=on_message,
+        on_error=on_error,
+        on_close=on_close,
+        header=headers  # 鉴权关键：握手阶段携带token头部
+    )
 
-    # 启动WebSocket连接，开始监听消息
+    # 启动连接并持续监听消息
     ws.run_forever()
 ```
 
