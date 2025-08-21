@@ -11,7 +11,7 @@ iTick.org Stocks WebSocket API 提供对深圳交易所、上海交易所、香�
 连接到集群：
 
 ```shell
-wscat -c wss://api.itick.org/sws -H "token: a5ca43ba************1847ac9259ae290c8"
+wscat -c wss://api.itick.org/stock -H "token: a5ca43ba************1847ac9259ae290c8"
 ```
 
 连接后您将收到以下两条消息：
