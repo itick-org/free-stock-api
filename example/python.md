@@ -71,7 +71,7 @@ subscribe_message = {
 def on_open(ws):
     """WebSocket连接打开后，直接发送订阅消息（无需鉴权消息）"""
     print("WebSocket连接已打开，正在发送订阅消息...")
-    # 仅发送订阅消息，删除鉴权消息发送逻辑
+    # 发送订阅消息
     ws.send(json.dumps(subscribe_message))
 
 def on_message(ws, message):
