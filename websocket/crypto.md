@@ -12,7 +12,7 @@ iTick.org Crypto WebSocket API 提供全球主流加密货币最新数据的流�
 连接到集群：
 
 ```shell
-wscat -c wss://api.itick.org/cws -H "token: a5ca43ba************1847ac9259ae290c8"
+wscat -c wss://api.itick.org/crypto -H "token: a5ca43ba************1847ac9259ae290c8"
 ```
 
 连接后您将收到以下两条消息：
